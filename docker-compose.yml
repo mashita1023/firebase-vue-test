@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  web:
+    container_name: web
+    build: .
+    ports:
+      - 8080:8080
+    volumes:
+      - ./app:/app:cached
+    tty: true
+    stdin_open: true
+#    command: bash -c "npm run serve"
