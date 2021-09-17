@@ -1,22 +1,33 @@
 <template>
-  <div class="signup">
-    <h2>Sign up</h2>
+  <div class="signin">
+    <h2>Sign in</h2>
     <input type="text" palceholder="Username" v-model="email">
     <input type="password" placeholder="Password" v-model="password">
-    <button>Register</button>
+    <button @click="signIn">Signin</button>
     <p>Do you have an account?
-      <router-link to="/signin">sign in now!!</router-link>
+      <router-link to="/signup">create account now!!</router-link>
     </p>
   </div>
 </template>
 
 <script>
+  import firebase from 'firebase/app'
   export default {
-    name: 'Signup',
+    name: 'Signin',
     data () {
       return {
         email: '',
         password: '',
+      }
+    },
+    methods: {
+      signIn: function () {
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(res => {
+          localStorage.setItem('jwt', res.user.qa)
+          this.$router.push('/')
+        }, err => {
+          alert(err.message)
+        })
       }
     }
   }
@@ -37,7 +48,7 @@
   a {
     color: #42b983;
   }
-  .signup {
+  .signin {
     margin-top: 20px;
     display: flex;
     flex-flow: column nowrap;
